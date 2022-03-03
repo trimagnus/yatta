@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "vite": "^2.8.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4"
   }
 }

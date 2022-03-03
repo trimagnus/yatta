@@ -1,5 +1,4 @@
 import './styles.css';
-import './node_modules/@fortawesome/fontawesome-free/css/all.css';
 import './favicon.svg';
 
 import storage from "./src/storage.js";

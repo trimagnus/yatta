@@ -7,6 +7,7 @@
 
 .fa-angle-down, .fa-angle-up {
   transform: scale(1.4,1.4);
+  
 }
 
 /* Needed to offset the new project button */
@@ -103,6 +104,11 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+}
+
+.Project-NavIcon::after {
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
 }
 
 .Project-NavIcon:hover {

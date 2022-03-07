@@ -7,4 +7,7 @@ The following tech is being used:
     * Vite (as an alternative to Webpack)
     * Self-created Components with batteries included
 
-More to come!
+Issue:
+  * On build, Vite generates invalid paths in index.html. Unsure why this is happening.
+Fix:
+  * Add a period to the start of each path (e.g. '/assets/index.5fdfe616.css' to './assets/index.5fdfe616.css')

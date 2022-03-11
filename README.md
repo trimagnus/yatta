@@ -9,7 +9,9 @@ The following tech is being used:
 
 Issue (Resolved):
   * On build, Vite generates invalid paths in index.html. Unsure why this is happening.
+
 Fix:
   * Add a period to the start of each path (e.g. '/assets/index.5fdfe616.css' to './assets/index.5fdfe616.css')
+  
 Permanent Fix:
   * Needed to add --base=./ to the vite build command.

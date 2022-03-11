@@ -9,5 +9,17 @@
   },
   "devDependencies": {
     "vite": "^2.8.0"
-  }
+  },
+  "description": "Yet Another Task Tracking App",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trimagnus/yatta.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trimagnus/yatta/issues"
+  },
+  "homepage": "https://github.com/trimagnus/yatta#readme"
 }

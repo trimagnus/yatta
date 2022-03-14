@@ -5,6 +5,15 @@ import ProjectDeletePopup from './modals/projectDeletePopup.js';
 import NewTaskPopup from './modals/newTaskPopup.js';
 import storage from "./storage.js";
 
+const sortState = {
+  ALPHA: 1,
+  REVERSE_ALPHA: 2,
+  DATE: 3,
+  REVERSE_DATE: 4,
+  PRIORITY: 5,
+  REVERSE_PRIORITY: 6
+};
+
 export default class Project extends HTMLElement {
   constructor(parent, state, allowControls=true) {
     super();
@@ -16,10 +25,15 @@ export default class Project extends HTMLElement {
     this.navArrowClicked = this.navArrowClicked.bind(this);
     this.navDotsClicked = this.navDotsClicked.bind(this);
     this.newTaskClicked = this.newTaskClicked.bind(this);
+    this.sortButtonClicked = this.sortButtonClicked.bind(this);
 
     this.render();
 
     this.popup = null;
+  }
+
+  sortButtonClicked() {
+    console.log('sort me')
   }
 
   newTaskClicked(e) {
@@ -95,6 +109,7 @@ export default class Project extends HTMLElement {
     const uid = storage.getNextTaskUID();
     const data = {
       uid: uid,
+      puid: this.state.uid,
       priority: priority,
       date: date,
       text: text,
@@ -132,6 +147,9 @@ export default class Project extends HTMLElement {
             <div class="Project-HeaderTextContainer">
               <div class="Project-HeaderText">${this.state.projectTitle}</div>
               <div class="Project-HeaderCount">${this.tasks.length}</div>
+              <div class="Project-SortButton">
+                <i class="fa-solid fa-arrow-down-a-z"></i>
+              </div>
             </div>
             <div class="Project-NavRight">
               
@@ -144,6 +162,18 @@ export default class Project extends HTMLElement {
         </div>
       </div
     `;
+
+
+    //Run sort based on sort mode!
+    this.tasks.sort((a,b) => {
+      if(a.state.text > b.state.text) {
+        return 1;
+      } else if (a.state.text < b.state.text) {
+        return -1;
+      }
+      return 0;
+    });
+    //
 
     this.projectContainer = this.querySelector('.Project-Container');
     this.projectContainer.prepend(...this.tasks);
@@ -165,6 +195,7 @@ export default class Project extends HTMLElement {
       this.querySelector('.Project-NavArrow').addEventListener('click', this.navArrowClicked);
       this.querySelector('.Project-NavDots').addEventListener('click', this.navDotsClicked);
       this.querySelector('.Project-NewTaskButton').addEventListener('click', this.newTaskClicked);
+      this.querySelector('.Project-SortButton').addEventListener('click', this.sortButtonClicked);
     }
   }
 }

@@ -38,6 +38,7 @@ export default class Task extends HTMLElement {
 
   updateTask(state) {
     this.state = state;
+    this.state.puid = this.state.uid;
     this.render();
 
     storage.updateTask(this.state.puid, this.state.uid, this.state);

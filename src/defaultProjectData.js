@@ -5,6 +5,7 @@ export default {
     {
       uid: 1,
       projectTitle: "This is a project",
+      sortMode: 1,
       tasks: [
       {
         uid: 1,
@@ -43,6 +44,7 @@ export default {
     {
       uid: 2,
       projectTitle: "Another Project",
+      sortMode: 1,
       tasks: [
       {
         uid: 5,
@@ -81,6 +83,7 @@ export default {
     {
       uid: 3,
       projectTitle: "Empty Project",
+      sortMode: 1,
       tasks: [
       
       ]

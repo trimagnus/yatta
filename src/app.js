@@ -74,6 +74,7 @@ export default class App extends HTMLElement {
     let pseudo = {
       uid: 999,
       projectTitle: '[All Tasks]',
+      sortMode: 1,
       tasks: tasks,
     };
     content.appendChild(new Project(this, pseudo, false));

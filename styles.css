@@ -113,6 +113,11 @@ body {
   color: grey;
 }
 
+.Project-SortButton {
+  padding: 0 10px;
+  border: 1px solid grey;
+}
+
 .Project-NavLeft {
   position: relative;
   top: -8px;

@@ -71,12 +71,13 @@ body {
 .Project-Header {
   padding: 0 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content:left;
 }
 
 .Project-HeaderTextContainer {
   display: flex;
   gap: 3px;
+  flex-grow: 1;
 }
 
 .Project-HeaderText {
@@ -88,7 +89,14 @@ body {
   color: grey;
 }
 
-.Project-Nav {
+.Project-NavLeft {
+  position: relative;
+  top: -8px;
+  left: -5px;
+  color: grey;
+}
+
+.Project-NavRight {
   position: relative;
   top: -5px;
   right: -5px;
@@ -116,18 +124,8 @@ body {
 }
 
 .Project-NewTaskButton {
-  background-color: #8c8;
-  color: white;
   font-weight: 900;
-  text-align: center;
-  padding: 10px 0;
-  margin: 5px 30px 0 20px;
   font-size: 20px;
-  cursor: pointer;
-}
-
-.Project-NewTaskButton:hover {
-  background-color: #ada;
 }
 
 .Popup {

@@ -125,13 +125,18 @@ export default class Project extends HTMLElement {
       <div data-uid=${this.state.uid} class="Project">
         <div class="Project-HeaderContainer">
           <div class="Project-Header">
+            <div class="Project-NavLeft">
+              <div data-uid="${this.state.uid}" class="Project-NavArrow Project-NavIcon">
+                <i class="fas fa-angle-down"></i>
+              </div>
+            </div>
             <div class="Project-HeaderTextContainer">
               <div class="Project-HeaderText">${this.state.projectTitle}</div>
               <div class="Project-HeaderCount">${this.tasks.length}</div>
             </div>
-            <div class="Project-Nav">
-              <div data-uid="${this.state.uid}" class="Project-NavArrow Project-NavIcon">
-                <i class="fas fa-angle-down"></i>
+            <div class="Project-NavRight">
+              <div class="Project-NavIcon Project-NewTaskButton">
+              <i class="fa-solid fa-plus"></i>
               </div>
               <div data-uid="${this.state.uid}" data-popup="false" class="Project-NavDots Project-NavIcon">
                 <i class="fas fa-ellipsis-v"></i>
@@ -141,7 +146,7 @@ export default class Project extends HTMLElement {
         </div>
 
         <div class="Project-Container">
-          <div class="Project-NewTaskButton">+New task</div>
+          
         </div>
       </div
     `;

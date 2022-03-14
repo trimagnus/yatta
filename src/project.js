@@ -6,10 +6,11 @@ import NewTaskPopup from './modals/newTaskPopup.js';
 import storage from "./storage.js";
 
 export default class Project extends HTMLElement {
-  constructor(parent, state) {
+  constructor(parent, state, allowControls=true) {
     super();
     this.parent = parent;
     this.state = state;
+    this.allowControls = allowControls;
     this.tasks = state.tasks.map(taskState => new Task(this, taskState));
 
     this.navArrowClicked = this.navArrowClicked.bind(this);
@@ -126,21 +127,14 @@ export default class Project extends HTMLElement {
         <div class="Project-HeaderContainer">
           <div class="Project-Header">
             <div class="Project-NavLeft">
-              <div data-uid="${this.state.uid}" class="Project-NavArrow Project-NavIcon">
-                <i class="fas fa-angle-down"></i>
-              </div>
+              
             </div>
             <div class="Project-HeaderTextContainer">
               <div class="Project-HeaderText">${this.state.projectTitle}</div>
               <div class="Project-HeaderCount">${this.tasks.length}</div>
             </div>
             <div class="Project-NavRight">
-              <div class="Project-NavIcon Project-NewTaskButton">
-              <i class="fa-solid fa-plus"></i>
-              </div>
-              <div data-uid="${this.state.uid}" data-popup="false" class="Project-NavDots Project-NavIcon">
-                <i class="fas fa-ellipsis-v"></i>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -154,9 +148,24 @@ export default class Project extends HTMLElement {
     this.projectContainer = this.querySelector('.Project-Container');
     this.projectContainer.prepend(...this.tasks);
 
-    this.querySelector('.Project-NavArrow').addEventListener('click', this.navArrowClicked);
-    this.querySelector('.Project-NavDots').addEventListener('click', this.navDotsClicked);
-    this.querySelector('.Project-NewTaskButton').addEventListener('click', this.newTaskClicked);
+    if(this.allowControls) {
+      this.querySelector('.Project-NavLeft').innerHTML = `
+        <div data-uid="${this.state.uid}" class="Project-NavArrow Project-NavIcon">
+          <i class="fas fa-angle-down"></i>
+        </div>
+      `;
+      this.querySelector('.Project-NavRight').innerHTML = `
+        <div class="Project-NavIcon Project-NewTaskButton">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div data-uid="${this.state.uid}" data-popup="false" class="Project-NavDots Project-NavIcon">
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+      `;
+      this.querySelector('.Project-NavArrow').addEventListener('click', this.navArrowClicked);
+      this.querySelector('.Project-NavDots').addEventListener('click', this.navDotsClicked);
+      this.querySelector('.Project-NewTaskButton').addEventListener('click', this.newTaskClicked);
+    }
   }
 }
 

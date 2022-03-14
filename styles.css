@@ -36,7 +36,7 @@ body {
 .SiteHeader {
   position: sticky;
   top: 0;
-  padding: 10px 0;
+  padding-top: 10px;
   background-color: darksalmon;
   z-index: 1;
 }
@@ -45,6 +45,30 @@ body {
   width: fit-content;
   margin: 0 auto;
   color: white;
+}
+
+.Filter-Container {
+  background-color: white;
+  display: flex;
+}
+
+.Filter-Button {
+  flex: 1;
+  text-align: center;
+  padding: 20px 0;
+  cursor: pointer;
+}
+
+.Filter-Button_AllProjects {
+  background-color: #fcc;
+}
+
+.Filter-Button_AllTasks {
+  background-color: #cfc;
+}
+
+.Filter-Button_Filter {
+  background-color: #ccf;
 }
 
 .Project {

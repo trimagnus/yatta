@@ -17,7 +17,7 @@ export default class Task extends HTMLElement {
     this.state.completed = !this.state.completed;
     this.render();
 
-    storage.updateTask(this.parent.state.uid, this.state.uid, this.state)
+    storage.updateTask(this.state.puid, this.state.uid, this.state)
   }
 
   clickedEditor() {
@@ -40,11 +40,11 @@ export default class Task extends HTMLElement {
     this.state = state;
     this.render();
 
-    storage.updateTask(this.parent.state.uid, this.state.uid, this.state);
+    storage.updateTask(this.state.puid, this.state.uid, this.state);
   }
 
   deleteTask() {
-    storage.deleteTask(this.parent.state.uid, this.state.uid);
+    storage.deleteTask(this.state.puid, this.state.uid);
     this.parent.deleteTask(this.state.uid);
     this.remove();
   }

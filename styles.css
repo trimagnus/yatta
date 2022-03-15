@@ -7,12 +7,18 @@
 
 .fa-angle-down, .fa-angle-up {
   transform: scale(1.4,1.4);
-  
 }
 
-/* Needed to offset the new project button */
 body {
-  margin-bottom: 80px;
+  background-color: #eee;
+}
+
+app-element {
+  background-color: white;
+  display: block;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 120px;
 }
 
 .ModalOpen {
@@ -23,7 +29,8 @@ body {
   z-index: 1000;
   position: fixed;
   bottom: 0px;
-  width: 100vw;
+  width: 100%;
+  max-width: 500px;
   text-align: center;
   background-color: rgb(61, 186, 228);
   padding: 16px 0;
@@ -166,7 +173,6 @@ body {
   position: absolute;
   background-color: white;
   box-shadow: 0 0 3px #333;
-  /* padding: 10px; */
   transition: opacity 0.25s ease-out;
   border-radius: 5px;
 }
@@ -269,7 +275,6 @@ body {
   border-bottom: 2px solid #eee;
   display: grid;
   grid-template-columns: 37px auto 33px;
-  /* padding: 10px 10px 10px 5px; */
 }
 
 .Task-CheckboxContainer {

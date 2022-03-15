@@ -3,26 +3,8 @@ import ProjectPopupMenu from './modals/projectPopupMenu.js';
 import ProjectRenamePopup from './modals/projectRenamePopup.js';
 import ProjectDeletePopup from './modals/projectDeletePopup.js';
 import NewTaskPopup from './modals/newTaskPopup.js';
-import { alphaSort,reverseAlphaSort,dateSort,reverseDateSort,prioritySort,reversePrioritySort } from './common.js';
+import { sortFunctions, sortIcons, MAX_SORT_MODES } from './common.js';
 import storage from "./storage.js";
-
-const sortState = {
-  ALPHA: 1,
-  REVERSE_ALPHA: 2,
-  DATE: 3,
-  REVERSE_DATE: 4,
-  PRIORITY: 5,
-  REVERSE_PRIORITY: 6
-};
-const sortFunctions = {
-  1: alphaSort,
-  2: reverseAlphaSort,
-  3: dateSort,
-  4: reverseDateSort,
-  5: prioritySort,
-  6: reversePrioritySort
-}
-const MAX_SORT_MODES = Object.keys(sortState).length;
 
 export default class Project extends HTMLElement {
   constructor(parent, state, allowControls=true) {
@@ -45,6 +27,7 @@ export default class Project extends HTMLElement {
   sortButtonClicked() {
     this.state.sortMode += 1;
     if(this.state.sortMode > MAX_SORT_MODES) this.state.sortMode = 1;
+    storage.updateProject(this.state.uid, this.state);
     this.render();
   }
 
@@ -63,15 +46,15 @@ export default class Project extends HTMLElement {
     arrow.classList.toggle('fa-angle-up')
   }
 
+  navDotsClicked(e) {
+    this.openMenuPopup();
+  }
+
   renameProject(text) {
     this.state.projectTitle = text;
     this.render();
 
     storage.updateProject(this.state.uid, this.state)
-  }
-
-  navDotsClicked(e) {
-    this.openMenuPopup();
   }
 
   openMenuPopup() {
@@ -149,19 +132,7 @@ export default class Project extends HTMLElement {
   }
 
   getSortIcon() {
-    if(this.state.sortMode === sortState.ALPHA) {
-      return '<i class="fa-solid fa-arrow-down-a-z"></i>';
-    } else if (this.state.sortMode === sortState.REVERSE_ALPHA) {
-      return '<i class="fa-solid fa-arrow-up-a-z"></i>';
-    } else if (this.state.sortMode === sortState.DATE) {
-      return '<i class="fa-solid fa-calendar"></i>';
-    } else if (this.state.sortMode === sortState.REVERSE_DATE) {
-      return '<i class="fa-solid fa-calendar"></i>';
-    } else if (this.state.sortMode === sortState.PRIORITY) {
-      return '<i class="fa-solid fa-exclamation"></i>';
-    } else if (this.state.sortMode === sortState.REVERSE_PRIORITY) {
-      return '<i class="fa-solid fa-circle-exclamation"></i>';
-    }
+    return sortIcons[this.state.sortMode];
   }
 
   sortTasks() {

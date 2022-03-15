@@ -188,8 +188,8 @@ export default class Project extends HTMLElement {
       this.querySelector('.Project-NavArrow').addEventListener('click', this.navArrowClicked);
       this.querySelector('.Project-NavDots').addEventListener('click', this.navDotsClicked);
       this.querySelector('.Project-NewTaskButton').addEventListener('click', this.newTaskClicked);
-      this.querySelector('.Project-SortButton').addEventListener('click', this.sortButtonClicked);
     }
+    this.querySelector('.Project-SortButton').addEventListener('click', this.sortButtonClicked);
   }
 }
 

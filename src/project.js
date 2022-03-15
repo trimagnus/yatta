@@ -3,6 +3,7 @@ import ProjectPopupMenu from './modals/projectPopupMenu.js';
 import ProjectRenamePopup from './modals/projectRenamePopup.js';
 import ProjectDeletePopup from './modals/projectDeletePopup.js';
 import NewTaskPopup from './modals/newTaskPopup.js';
+import { alphaSort,reverseAlphaSort,dateSort,reverseDateSort,prioritySort,reversePrioritySort } from './common.js';
 import storage from "./storage.js";
 
 const sortState = {
@@ -13,6 +14,15 @@ const sortState = {
   PRIORITY: 5,
   REVERSE_PRIORITY: 6
 };
+const sortFunctions = {
+  1: alphaSort,
+  2: reverseAlphaSort,
+  3: dateSort,
+  4: reverseDateSort,
+  5: prioritySort,
+  6: reversePrioritySort
+}
+const MAX_SORT_MODES = Object.keys(sortState).length;
 
 export default class Project extends HTMLElement {
   constructor(parent, state, allowControls=true) {
@@ -33,7 +43,9 @@ export default class Project extends HTMLElement {
   }
 
   sortButtonClicked() {
-    console.log('sort me')
+    this.state.sortMode += 1;
+    if(this.state.sortMode > MAX_SORT_MODES) this.state.sortMode = 1;
+    this.render();
   }
 
   newTaskClicked(e) {
@@ -136,6 +148,27 @@ export default class Project extends HTMLElement {
     this.render();
   }
 
+  getSortIcon() {
+    if(this.state.sortMode === sortState.ALPHA) {
+      return '<i class="fa-solid fa-arrow-down-a-z"></i>';
+    } else if (this.state.sortMode === sortState.REVERSE_ALPHA) {
+      return '<i class="fa-solid fa-arrow-up-a-z"></i>';
+    } else if (this.state.sortMode === sortState.DATE) {
+      return '<i class="fa-solid fa-calendar"></i>';
+    } else if (this.state.sortMode === sortState.REVERSE_DATE) {
+      return '<i class="fa-solid fa-calendar"></i>';
+    } else if (this.state.sortMode === sortState.PRIORITY) {
+      return '<i class="fa-solid fa-exclamation"></i>';
+    } else if (this.state.sortMode === sortState.REVERSE_PRIORITY) {
+      return '<i class="fa-solid fa-circle-exclamation"></i>';
+    }
+  }
+
+  sortTasks() {
+    const sortFunc = sortFunctions[this.state.sortMode];
+    this.tasks.sort(sortFunc);
+  }
+
   render() {
     this.innerHTML = `
       <div data-uid=${this.state.uid} class="Project">
@@ -148,7 +181,7 @@ export default class Project extends HTMLElement {
               <div class="Project-HeaderText">${this.state.projectTitle}</div>
               <div class="Project-HeaderCount">${this.tasks.length}</div>
               <div class="Project-SortButton">
-                <i class="fa-solid fa-arrow-down-a-z"></i>
+                ${this.getSortIcon()}
               </div>
             </div>
             <div class="Project-NavRight">
@@ -163,18 +196,7 @@ export default class Project extends HTMLElement {
       </div
     `;
 
-
-    //Run sort based on sort mode!
-    this.tasks.sort((a,b) => {
-      if(a.state.text > b.state.text) {
-        return 1;
-      } else if (a.state.text < b.state.text) {
-        return -1;
-      }
-      return 0;
-    });
-    //
-
+    this.sortTasks();
     this.projectContainer = this.querySelector('.Project-Container');
     this.projectContainer.prepend(...this.tasks);
 

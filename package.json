@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build --base=./",
     "preview": "vite preview",
-    "publish": "git push; git subtree push --prefix dist origin gh-pages"
+    "publish": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "devDependencies": {
     "vite": "^2.8.0"

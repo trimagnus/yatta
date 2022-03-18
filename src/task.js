@@ -23,7 +23,8 @@ export default class Task extends HTMLElement {
   clickedEditor() {
     this.removePopup();
     this.popup = new TaskEditorPopup(this, this.state);
-    this.querySelector('.Task').appendChild(this.popup);
+    // this.querySelector('.Task').appendChild(this.popup);
+    document.body.appendChild(this.popup);
     this.popup.inputFocus();
     document.querySelector('body').classList.add('ModalOpen');
   }

@@ -43,7 +43,7 @@ export default class NewProjectPopup extends Popup {
   render() {
     super.render();
 
-    this.popup.classList.add('Popup-NewProject');
+    // this.popup.classList.add('Popup-NewProject');
     this.popup.classList.add('Popup_Centered')
 
     this.popup.innerHTML = `

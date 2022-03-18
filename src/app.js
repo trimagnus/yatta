@@ -18,7 +18,8 @@ export default class App extends HTMLElement {
 
   newProjectPopup() {
     this.popup = new NewProjectPopup(this);
-    this.appendChild(this.popup);
+    // this.appendChild(this.popup);
+    document.body.appendChild(this.popup);
     document.querySelector('body').classList.add('ModalOpen');
 
     //Not sure if I need preventScroll

@@ -66,7 +66,8 @@ export default class Project extends HTMLElement {
   openRenamePopup(e) {
     this.removePopup();
     this.popup = new ProjectRenamePopup(this);
-    this.querySelector('.Project').appendChild(this.popup);
+    // this.querySelector('.Project').appendChild(this.popup);
+    document.body.appendChild(this.popup);
     this.popup.inputFocus();
     document.querySelector('body').classList.add('ModalOpen');
   }
@@ -74,7 +75,8 @@ export default class Project extends HTMLElement {
   openNewTaskPopup(e) {
     this.removePopup();
     this.popup = new NewTaskPopup(this);
-    this.querySelector('.Project').appendChild(this.popup);
+    // this.querySelector('.Project').appendChild(this.popup);
+    document.body.appendChild(this.popup);
     this.popup.inputFocus();
     document.querySelector('body').classList.add('ModalOpen');
   }
@@ -82,7 +84,8 @@ export default class Project extends HTMLElement {
   deleteProjectConfirmPopup(e) {
     this.removePopup();
     this.popup = new ProjectDeletePopup(this);
-    this.querySelector('.Project').appendChild(this.popup);
+    // this.querySelector('.Project').appendChild(this.popup);
+    document.body.appendChild(this.popup);
     this.popup.focus();
     document.querySelector('body').classList.add('ModalOpen');
   }

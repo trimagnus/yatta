@@ -185,9 +185,10 @@ app-element {
 }
 
 .Popup_Centered {
+  position: fixed;
   right: 0;
   left: 0;
-  top: 0;
+  top: 40px;
   margin-left: auto;
   margin-right: auto;
   width: 250px;
@@ -214,11 +215,11 @@ app-element {
   opacity: 35%;
 }
 
-.Popup-NewProject {
+/* .Popup-NewProject {
   position: fixed;
   top: 40%;
   margin: auto auto;
-}
+} */
 
 .Popup-NewProjectInput {
   width: 95%;

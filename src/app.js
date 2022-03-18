@@ -83,7 +83,7 @@ export default class App extends HTMLElement {
 
   showFilter() {
     let content = this.querySelector('.Site-Content');
-    content.innerHTML = '';
+    content.innerHTML = '(To be implemented)';
     let filter = null;
     //   if(filter) {
     //     //Create the appropriate pseudo-project based on filter

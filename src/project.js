@@ -3,22 +3,32 @@ import ProjectPopupMenu from './modals/projectPopupMenu.js';
 import ProjectRenamePopup from './modals/projectRenamePopup.js';
 import ProjectDeletePopup from './modals/projectDeletePopup.js';
 import NewTaskPopup from './modals/newTaskPopup.js';
+import { sortFunctions, sortIcons, MAX_SORT_MODES } from './common.js';
 import storage from "./storage.js";
 
 export default class Project extends HTMLElement {
-  constructor(parent, state) {
+  constructor(parent, state, allowControls=true) {
     super();
     this.parent = parent;
     this.state = state;
+    this.allowControls = allowControls;
     this.tasks = state.tasks.map(taskState => new Task(this, taskState));
 
     this.navArrowClicked = this.navArrowClicked.bind(this);
     this.navDotsClicked = this.navDotsClicked.bind(this);
     this.newTaskClicked = this.newTaskClicked.bind(this);
+    this.sortButtonClicked = this.sortButtonClicked.bind(this);
 
     this.render();
 
     this.popup = null;
+  }
+
+  sortButtonClicked() {
+    this.state.sortMode += 1;
+    if(this.state.sortMode > MAX_SORT_MODES) this.state.sortMode = 1;
+    storage.updateProject(this.state.uid, this.state);
+    this.render();
   }
 
   newTaskClicked(e) {
@@ -36,15 +46,15 @@ export default class Project extends HTMLElement {
     arrow.classList.toggle('fa-angle-up')
   }
 
+  navDotsClicked(e) {
+    this.openMenuPopup();
+  }
+
   renameProject(text) {
     this.state.projectTitle = text;
     this.render();
 
     storage.updateProject(this.state.uid, this.state)
-  }
-
-  navDotsClicked(e) {
-    this.openMenuPopup();
   }
 
   openMenuPopup() {
@@ -94,6 +104,7 @@ export default class Project extends HTMLElement {
     const uid = storage.getNextTaskUID();
     const data = {
       uid: uid,
+      puid: this.state.uid,
       priority: priority,
       date: date,
       text: text,
@@ -120,38 +131,65 @@ export default class Project extends HTMLElement {
     this.render();
   }
 
+  getSortIcon() {
+    return sortIcons[this.state.sortMode];
+  }
+
+  sortTasks() {
+    const sortFunc = sortFunctions[this.state.sortMode];
+    this.tasks.sort(sortFunc);
+  }
+
   render() {
     this.innerHTML = `
       <div data-uid=${this.state.uid} class="Project">
         <div class="Project-HeaderContainer">
           <div class="Project-Header">
+            <div class="Project-NavLeft">
+              
+            </div>
             <div class="Project-HeaderTextContainer">
               <div class="Project-HeaderText">${this.state.projectTitle}</div>
               <div class="Project-HeaderCount">${this.tasks.length}</div>
+              <div class="Project-SortButton">
+                ${this.getSortIcon()}
+              </div>
             </div>
-            <div class="Project-Nav">
-              <div data-uid="${this.state.uid}" class="Project-NavArrow Project-NavIcon">
-                <i class="fas fa-angle-down"></i>
-              </div>
-              <div data-uid="${this.state.uid}" data-popup="false" class="Project-NavDots Project-NavIcon">
-                <i class="fas fa-ellipsis-v"></i>
-              </div>
+            <div class="Project-NavRight">
+              
             </div>
           </div>
         </div>
 
         <div class="Project-Container">
-          <div class="Project-NewTaskButton">+New task</div>
+          
         </div>
       </div
     `;
 
+    this.sortTasks();
     this.projectContainer = this.querySelector('.Project-Container');
     this.projectContainer.prepend(...this.tasks);
 
-    this.querySelector('.Project-NavArrow').addEventListener('click', this.navArrowClicked);
-    this.querySelector('.Project-NavDots').addEventListener('click', this.navDotsClicked);
-    this.querySelector('.Project-NewTaskButton').addEventListener('click', this.newTaskClicked);
+    if(this.allowControls) {
+      this.querySelector('.Project-NavLeft').innerHTML = `
+        <div data-uid="${this.state.uid}" class="Project-NavArrow Project-NavIcon">
+          <i class="fas fa-angle-down"></i>
+        </div>
+      `;
+      this.querySelector('.Project-NavRight').innerHTML = `
+        <div class="Project-NavIcon Project-NewTaskButton">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <div data-uid="${this.state.uid}" data-popup="false" class="Project-NavDots Project-NavIcon">
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+      `;
+      this.querySelector('.Project-NavArrow').addEventListener('click', this.navArrowClicked);
+      this.querySelector('.Project-NavDots').addEventListener('click', this.navDotsClicked);
+      this.querySelector('.Project-NewTaskButton').addEventListener('click', this.newTaskClicked);
+    }
+    this.querySelector('.Project-SortButton').addEventListener('click', this.sortButtonClicked);
   }
 }
 

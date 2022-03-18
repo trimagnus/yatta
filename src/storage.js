@@ -37,6 +37,7 @@ function newProject(uid, title) {
   const p = {
     uid: uid,
     projectTitle: title,
+    sortMode: 1,
     tasks: []
   };
   data.projects.push(p);
